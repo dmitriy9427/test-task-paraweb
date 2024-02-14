@@ -14,7 +14,7 @@
   top: 0;
   right: 0;
   left: 0;
-  z-index: 11;
+  z-index: 115;
   background-color: rgb(255, 255, 255);
 }
 @media (max-width: 768px) {
@@ -90,6 +90,7 @@
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    cursor: pointer;
   }
 }
 
@@ -103,6 +104,8 @@
 .top__text {
   color: rgb(255, 255, 255);
   font-family: "Montserrat", sans-serif;
+  position: relative;
+  z-index: 11;
   padding-top: clamp(1.25rem, -0.179rem + 7.143vw, 6.25rem);
   padding-left: clamp(1rem, -1.161rem + 10.804vw, 8.563rem);
   padding-bottom: clamp(1.25rem, 1.179rem + 0.357vw, 1.5rem);
@@ -150,6 +153,7 @@
   border-radius: 10px;
   padding: 16px 32px 16px 32px;
   margin-bottom: 114px;
+  cursor: pointer;
 }
 .top__text-pagination {
   display: -webkit-box;
@@ -191,6 +195,7 @@
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+  z-index: 0;
 }
 .top .active {
   background-color: rgb(255, 255, 255);
