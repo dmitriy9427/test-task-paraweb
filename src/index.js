@@ -6,6 +6,10 @@ let list = document.querySelector(".articles__list");
 const select = document.querySelector(".select");
 const selectList = document.querySelector(".select__list");
 const selectTitle = document.querySelector(".select__title");
+const inputOne = document.querySelector(".date-one");
+const inputTwo = document.querySelector(".date-two");
+
+inputOne.addEventListener("change", (e) => console.log(e.target.value));
 
 const arrMonth = [
   "January",
