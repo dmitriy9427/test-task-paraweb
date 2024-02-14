@@ -11,6 +11,7 @@
 - HTML5 (BEM)
 - SCSS (flex, grid, clamp(), позиционирование)
 - JavaScript
+- Webpack
 
 ## Описание и функциональность:
 
