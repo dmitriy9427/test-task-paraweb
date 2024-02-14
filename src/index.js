@@ -1,15 +1,11 @@
 import "./index.scss";
+import axios from "axios";
 
-// https://mocki.io/v1/a5814d24-4e22-49fc-96d1-0e9ae2952afc
+let list = document.querySelector(".articles__list");
 
-const list = document.querySelector(".articles__list");
 const select = document.querySelector(".select");
 const selectList = document.querySelector(".select__list");
 const selectTitle = document.querySelector(".select__title");
-
-select.addEventListener("click", () => {
-  selectList.classList.toggle("select__list-active");
-});
 
 const arrMonth = [
   "January",
@@ -25,18 +21,11 @@ const arrMonth = [
   "November",
   "December",
 ];
+// https://mocki.io/v1/a5814d24-4e22-49fc-96d1-0e9ae2952afc
 
-function handleFilterList(list) {
-  selectList.addEventListener("click", (e) => {
-    selectTitle.textContent = e.target.textContent;
-    list = list.filter((el) => el.author === e.target.textContent);
-  });
-
-  selectList.removeEventListener("click", (e) => {
-    list = list.filter((el) => el.author === e.target.textContent);
-    console.log(list);
-  });
-}
+select.addEventListener("click", () => {
+  selectList.classList.toggle("select__list-active");
+});
 
 function handleCreateElementsSelect(author) {
   const li = document.createElement("li");
@@ -69,41 +58,65 @@ function handleCreateElementsArticles(date, t, desc, user) {
 
   const button = document.createElement("button");
   button.classList.add("articles__item-button");
-  button.textContent = user;
+  button.textContent = user ? user : "No name";
 
   li.append(span, title, paragraph, button);
-  list.append(li);
-
-  return list;
+  return li;
 }
 
 async function getData() {
   try {
-    const res = await fetch(
+    const res = await axios.get(
       "https://mocki.io/v1/a5814d24-4e22-49fc-96d1-0e9ae2952afc"
     );
 
-    const { articles } = await res.json();
+    let { articles } = await res.data;
 
     if (!articles) {
       throw new Error("Не удалось получить данные с сервера.");
     }
-    return articles.map((el) => {
-      handleCreateElementsArticles(
-        el.publishedAt,
-        el.title,
-        el.description,
-        el.author
+
+    articles.map((el) => {
+      list.append(
+        handleCreateElementsArticles(
+          el.publishedAt,
+          el.title,
+          el.description,
+          el.author
+        )
       );
+
       if (el.author !== null) {
         handleCreateElementsSelect(el.author);
       }
-      handleFilterList(articles);
     });
   } catch (error) {
     list.textContent = "Что-то пошло не так!";
     console.log(error);
   }
 }
+
+selectList.addEventListener("click", async (e) => {
+  list.innerHTML = "";
+  selectTitle.textContent = e.target.textContent;
+
+  const res = await axios.get(
+    "https://mocki.io/v1/a5814d24-4e22-49fc-96d1-0e9ae2952afc"
+  );
+
+  let { articles } = await res.data;
+
+  articles = articles.filter((el) => e.target.textContent === el.author);
+  articles.map((el) => {
+    list.append(
+      handleCreateElementsArticles(
+        el.publishedAt,
+        el.title,
+        el.description,
+        el.author
+      )
+    );
+  });
+});
 
 getData();
