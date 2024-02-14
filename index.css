@@ -588,6 +588,7 @@
 }
 .footer__icons-icon {
   margin-right: 18.5px;
+  cursor: pointer;
 }
 
 * {
